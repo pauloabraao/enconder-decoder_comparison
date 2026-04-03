@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/extrato-contrato.schema.json",
+  "title": "Contract Extract",
+  "type": "object",
+  "required": [
+    "document_type",
+    "document_id",
+    "contracting_party",
+    "contracted_party",
+    "validity",
+    "global_value",
+    "signature",
+    "legal_unit"
+  ],
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "description": "Type of document published in the Official Gazette."
+    },
+    "document_id": {
+      "type": "object",
+      "required": ["number", "ig"],
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Official contract identification number."
+        },
+        "ig": {
+          "type": "string",
+          "description": "Internal IG identifier associated with the publication."
+        }
+      },
+      "additionalProperties": false
+    },
+    "contracting_party": {
+      "type": "object",
+      "required": ["name", "cnpj"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the public authority or entity acting as contracting party."
+        },
+        "cnpj": {
+          "type": "string",
+          "pattern": "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$",
+          "description": "Brazilian corporate taxpayer identification number (CNPJ) of the contracting party in the format XX.XXX.XXX/XXXX-XX."
+        }
+      },
+      "additionalProperties": false
+    },
+    "contracted_party": {
+      "type": "object",
+      "required": ["name", "cnpj"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the private or public entity contracted to provide goods or services."
+        },
+        "cnpj": {
+          "type": "string",
+          "pattern": "^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$",
+          "description": "Brazilian corporate taxpayer identification number (CNPJ) of the contracted party in the format XX.XXX.XXX/XXXX-XX."
+        }
+      },
+      "additionalProperties": false
+    },
+    "validity": {
+      "type": "string",
+      "description": "Contract duration or validity period as stated in the document (e.g., number of months or specific term)."
+    },
+    "global_value": {
+      "type": "string",
+      "description": "Total monetary value of the contract expressed in Brazilian currency."
+    },
+    "signature": {
+      "type": "object",
+      "required": ["local", "date", "signatories"],
+      "properties": {
+        "local": {
+          "type": "string",
+          "description": "City and state where the contract was signed."
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^\\d{2}/\\d{2}/\\d{4}$",
+          "description": "Signature date in the format DD/MM/YYYY."
+        },
+        "signatories": {
+          "type": "object",
+          "required": ["contracting_party", "contracted_party"],
+          "properties": {
+            "contracting_party": {
+              "type": "string",
+              "description": "Name of the legal representative signing on behalf of the contracting party."
+            },
+            "contracted_party": {
+              "type": "string",
+              "description": "Name of the legal representative signing on behalf of the contracted party."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "legal_unit": {
+      "type": "object",
+      "required": ["name", "role"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the legal authority responsible for reviewing or endorsing the contract."
+        },
+        "role": {
+          "type": "string",
+          "description": "Official position held by the responsible legal authority."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
